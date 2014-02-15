@@ -84,16 +84,18 @@ The same dependency will be cached per request. For instance:
 
 ```javascript
 app.factory('me', function(req, res, next) {
-  // This code block will only be executed once per request. 
+  // This code block will only be executed once per request.
   User.find(req.params.userId, next);
 });
 
-app.get(function(me, next) {
+var checkPermission = function(me, next) {
   if (!me) {
-  	return next(new Error('No permission.'));
+    return next(new Error('No permission.'));
   }
   next();
-}, function(me, res) {
+};
+
+app.get('/me', checkPermission, function(me, res) {
   res.json(me);
 });
 ```
