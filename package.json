@@ -1,6 +1,6 @@
 {
   "name": "express-di",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Bring the dependency injection pattern to the Express",
   "main": "index.js",
   "scripts": {
