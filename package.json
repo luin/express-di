@@ -1,12 +1,12 @@
 {
   "name": "express-di",
-  "version": "0.0.3",
-  "description": "",
+  "version": "0.0.4",
+  "description": "Bring the dependency injection pattern to the Express",
   "main": "index.js",
   "scripts": {
     "test": "make test"
   },
-  "author": "Zihua Li",
+  "author": "Zihua Li <i@zihua.li>",
   "license": "MIT",
   "dependencies": {
     "async": "~0.2.10"
@@ -16,5 +16,16 @@
     "mocha": "~1.17.1",
     "should": "~3.1.2",
     "supertest": "~0.9.0"
-  }
+  },
+  "keywords": [
+    "express",
+    "di",
+    "dependency injection",
+    "middlewares",
+    "routes"
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "repository": "git://github.com/luin/express-di"
 }
