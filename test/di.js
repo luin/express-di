@@ -1,7 +1,6 @@
 var helpers = require('./helpers');
 var express = require('express');
-var setup = require('..');
-setup(express);
+require('..');
 var app = express();
 
 var request = require('supertest')(app);
