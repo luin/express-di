@@ -8,3 +8,7 @@ Installation
     
 Usage
 -----
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/luin/express-di/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
