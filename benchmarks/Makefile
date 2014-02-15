@@ -1,6 +1,6 @@
 all:
-	@./run 1 raw
-	@./run 1 di
+	@./run 0 raw
+	@./run 0 di
 	@./run 5 raw
 	@./run 5 di
 	@./run 10 raw

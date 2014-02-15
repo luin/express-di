@@ -121,4 +121,23 @@ describe('express.Router.prototype.route', function() {
     app.get('/test6', func1);
     request.get('/test6').expect(/Unrecognized dependency: missing/, done);
   });
+
+  it('should cache the same dependency', function(done) {
+    var times = 0;
+    app.factory('test7', function(req, res, next) {
+      times += 1;
+      next(null, times);
+    });
+
+    var func1 = function(next, test7) {
+      next();
+    };
+    var func2 = function(req, res, test7) {
+      test7.should.eql(1);
+      req.__di_caches.test7.should.eql([null, 1]);
+      res.send(200);
+    };
+    app.get('/test7', func1, func2);
+    request.get('/test7').expect(200, done);
+  });
 });
