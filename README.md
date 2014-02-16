@@ -72,7 +72,7 @@ The `app.factory(name, fn)` method is used to define a dependency.
 ### Arguments
 
 * `name`: The name of the dependency.
-* `fn`: A function that just like a typical express middleware, takes 3 arguments, `req`, `res` and `next`, with a subtle difference that the `next` function takes 2 arguments: an error(can be null) and the value of the dependency.
+* `fn`: A function that is like a typical express middleware, takes 3 arguments, `req`, `res` and `next`, with a subtle difference that the `next` function takes 2 arguments: an error(can be null) and the value of the dependency.
 
 ### Default dependencies
 express-di has defined three default dependencies: `req`, `res` and `next`, so that you can use these arguments in your router middlewares just like before.
@@ -108,7 +108,7 @@ You can use DI in your routers(aka `app.get()`, `app.post()`, `app.put()`...).
 
 Performance
 -----
-The process of DI will only be executed once at startup, so you don't need to worry about performance.
+The process of DI will only be executed once at startup, so you don't need to worry about the performance.
 
 
 You can test the performance using `make bench`.
