@@ -75,7 +75,7 @@ The `app.factory(name, fn)` method is used to define a dependency.
 * `fn`: A function that is like a typical express middleware, takes 3 arguments, `req`, `res` and `next`, with a subtle difference that the `next` function takes 2 arguments: an error(can be null) and the value of the dependency.
 
 ### Default dependencies
-express-di has defined three default dependencies: `req`, `res` and `next`, so that you can use these arguments in your router middlewares just like before.
+express-di has defined three default dependencies: `req`, `res` and `next`, so that you can use these arguments in your router middlewares just as before.
 
 
 Cache
