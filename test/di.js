@@ -140,4 +140,10 @@ describe('express.Router.prototype.route', function() {
     app.get('/test7', func1, func2);
     request.get('/test7').expect(200, done);
   });
+
+  it('should pass non-function callbacks directly', function() {
+    (function(){
+      app.get('/test8', 'string');
+    }).should.throw(/requires callback functions but got a/);
+  });
 });
