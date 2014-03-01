@@ -100,7 +100,6 @@ app.get('/me', checkPermission, function(me, res) {
 });
 ```
 
-
 Where can I use DI?
 -----
 You can use DI in your routers(aka `app.get()`, `app.post()`, `app.put()`...).
