@@ -178,4 +178,22 @@ describe('express.Router.prototype.route', function() {
       done();
     });
   });
+
+  it('should not affect the parent app', function(done) {
+    var appNew = express();
+    app.use('/path', appNew);
+
+    appNew.factory('test11', function(req, res, next) {
+      next(null, 'test11');
+    });
+
+    var func = function(test11, res) {
+      res.send(200);
+    };
+    app.get('/test11', func);
+    request.get('/test11').expect(500, function(err, res) {
+      res.text.should.match(/Unrecognized dependency: test11\n/);
+      done();
+    });
+  });
 });
