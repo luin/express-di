@@ -3,7 +3,8 @@ var express = require('express');
 require('..');
 var app = express();
 
-var request = require('supertest')(app);
+var supertest = require('supertest');
+var request = supertest(app);
 
 describe('app.factory', function() {
   it('should be a function', function() {
@@ -145,5 +146,36 @@ describe('express.Router.prototype.route', function() {
     (function(){
       app.get('/test8', 'string');
     }).should.throw(/requires callback functions but got a/);
+  });
+
+  it('should work when mount an express app', function(done) {
+    var appNew = express();
+    app.factory('test9', function(req, res, next) {
+      next(null, 'test9');
+    });
+    var func = function(test9, res) {
+      test9.should.eql('test9');
+      res.send(200);
+    };
+    app.use('/test9', appNew);
+    appNew.get('/path', func);
+    request.get('/test9/path').expect(200, done);
+  });
+
+  it('should not affect others app', function(done) {
+    var appNew = express();
+    app.factory('test10', function(req, res, next) {
+      next(null, 'test10');
+    });
+    var func = function(test10, res) {
+      test10.should.not.eql('test10');
+      res.send(200);
+    };
+    appNew.get('/test10', func);
+    var request = supertest(appNew);
+    request.get('/test10').expect(500, function(err, res) {
+      res.text.should.match(/Unrecognized dependency: test10\n/);
+      done();
+    });
   });
 });
