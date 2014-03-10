@@ -159,7 +159,15 @@ describe('express.Router.prototype.route', function() {
     };
     app.use('/test9', appNew);
     appNew.get('/path', func);
-    request.get('/test9/path').expect(200, done);
+    request.get('/test9/path').expect(200, function() {
+      var appNew2 = express();
+      app.use('/test9/2', appNew2);
+      appNew2.factory('xxx', function(req, res, next) {
+        next(null, 'xxx');
+      });
+      appNew2.get('/path', func);
+      request.get('/test9/2/path').expect(200, done);
+    });
   });
 
   it('should not affect others app', function(done) {
