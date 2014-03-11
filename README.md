@@ -102,7 +102,7 @@ app.get('/me', checkPermission, function(me, res) {
 
 Where can I use DI?
 -----
-You can use DI in your routers(aka `app.get()`, `app.post()`, `app.put()`...).
+You can use DI in your route-specific middlewares(aka `app.get()`, `app.post()`, `app.put()`...).
 
 
 Performance
@@ -117,6 +117,9 @@ Test
 * `make test`
 * `make test-cov` will create the coverage.html showing the test-coverage of this module.
 
+Articles and Recipes
+-----
+* [Express 框架 middleware 的依赖问题与解决方案](http://zihua.li/2014/03/using-dependency-injection-to-optimise-express-middlewares/) [Chinese]
 
 License
 -----
