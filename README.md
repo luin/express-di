@@ -4,7 +4,7 @@ express-di
 
 Installation
 -----
-    npm inttall --save express-di
+    npm install --save express-di
 
 Usage
 -----
