@@ -1,6 +1,7 @@
 express-di
 ==========
 [![Build Status](https://travis-ci.org/luin/express-di.png?branch=master)](https://travis-ci.org/luin/express-di)
+[![Code Climate](https://codeclimate.com/github/luin/express-di.png)](https://codeclimate.com/github/luin/express-di)
 
 Installation
 -----
