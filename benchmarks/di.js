@@ -1,4 +1,3 @@
-var http = require('http');
 var express = require('express');
 require('..');
 var app = express();
@@ -14,7 +13,7 @@ middlewares.push(function(name, req, res, next) {
 
 var body = new Buffer('Hello World');
 
-middlewares.push(function(req, res, next){
+middlewares.push(function(req, res){
   res.send(body);
 });
 
