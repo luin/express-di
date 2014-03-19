@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Express-di by luin</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Express-di</h1>
+        <p>Bring dependency injection to the Express</p>
+
+        <p class="view"><a href="https://github.com/luin/express-di">View the Project on GitHub <small>luin/express-di</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/luin/express-di/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/luin/express-di/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/luin/express-di">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="express-di" class="anchor" href="#express-di"><span class="octicon octicon-link"></span></a>express-di</h1>
+
+<p><a href="https://travis-ci.org/luin/express-di"><img src="https://travis-ci.org/luin/express-di.png?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>npm install --save express-di
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To get started simply <code>require('express-di')</code> before <code>var app = express()</code>, and this module will monkey-patch Express, allowing you to define "denpendencies" by providing the <code>app.factory()</code> method, after which you can use the "denpendencies" in you routes following the <a href="http://docs.angularjs.org/guide/di">Dependency Injection pattern(DI)</a>.</p>
+
+<h2>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p>In the past, if you want to pass variables between middlewares, you have to tack on properties to <code>req</code>, which seems odd and uncontrollable(that you couldn't point out easily which middleware add what properties to <code>req</code>). For example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'express'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">middleware1</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">req</span><span class="p">.</span><span class="nx">people1</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">"Bob"</span> <span class="p">};</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">middleware2</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">req</span><span class="p">.</span><span class="nx">people2</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">"Jeff"</span> <span class="p">};</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="nx">middleware1</span><span class="p">,</span> <span class="nx">middleware2</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span>
+    <span class="nx">people1</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">people1</span><span class="p">,</span>
+    <span class="nx">people2</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">people2</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3008</span><span class="p">);</span>
+</pre></div>
+
+<p>After using express-di, you can do this:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'express'</span><span class="p">);</span>
+<span class="c1">// Require express-di</span>
+<span class="nx">require</span><span class="p">(</span><span class="s1">'express-di'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">'people1'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">next</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">"Bob"</span> <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">'people2'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">next</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">"Jeff"</span> <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">people1</span><span class="p">,</span> <span class="nx">people2</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span>
+    <span class="nx">people1</span><span class="o">:</span> <span class="nx">people1</span><span class="p">,</span>
+    <span class="nx">people2</span><span class="o">:</span> <span class="nx">people2</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3008</span><span class="p">);</span>
+
+</pre></div>
+
+<h2>
+<a name="define-a-dependency" class="anchor" href="#define-a-dependency"><span class="octicon octicon-link"></span></a>Define a dependency</h2>
+
+<p>The <code>app.factory(name, fn)</code> method is used to define a dependency.</p>
+
+<h3>
+<a name="arguments" class="anchor" href="#arguments"><span class="octicon octicon-link"></span></a>Arguments</h3>
+
+<ul>
+<li>
+<code>name</code>: The name of the dependency.</li>
+<li>
+<code>fn</code>: A function that is like a typical express middleware, takes 3 arguments, <code>req</code>, <code>res</code> and <code>next</code>, with a subtle difference that the <code>next</code> function takes 2 arguments: an error(can be null) and the value of the dependency.</li>
+</ul><h3>
+<a name="default-dependencies" class="anchor" href="#default-dependencies"><span class="octicon octicon-link"></span></a>Default dependencies</h3>
+
+<p>express-di has defined three default dependencies: <code>req</code>, <code>res</code> and <code>next</code>, so that you can use these arguments in your router middlewares just as before.</p>
+
+<h2>
+<a name="cache" class="anchor" href="#cache"><span class="octicon octicon-link"></span></a>Cache</h2>
+
+<p>The same dependency will be cached per request. For instance:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">app</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">'me'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code block will only be executed once per request.</span>
+  <span class="nx">User</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">userId</span><span class="p">,</span> <span class="nx">next</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">checkPermission</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">me</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">'No permission.'</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="nx">next</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/me'</span><span class="p">,</span> <span class="nx">checkPermission</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">me</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="where-can-i-use-di" class="anchor" href="#where-can-i-use-di"><span class="octicon octicon-link"></span></a>Where can I use DI?</h2>
+
+<p>You can use DI in your route-specific middlewares(aka <code>app.get()</code>, <code>app.post()</code>, <code>app.put()</code>...).</p>
+
+<h2>
+<a name="performance" class="anchor" href="#performance"><span class="octicon octicon-link"></span></a>Performance</h2>
+
+<p>The process of DI will only be executed once at startup, so you don't need to worry about the performance.</p>
+
+<p>You can test the performance using <code>make bench</code>.</p>
+
+<h2>
+<a name="test" class="anchor" href="#test"><span class="octicon octicon-link"></span></a>Test</h2>
+
+<ul>
+<li><code>make test</code></li>
+<li>
+<code>make test-cov</code> will create the coverage.html showing the test-coverage of this module.</li>
+</ul><h2>
+<a name="articles-and-recipes" class="anchor" href="#articles-and-recipes"><span class="octicon octicon-link"></span></a>Articles and Recipes</h2>
+
+<ul>
+<li>
+<a href="http://zihua.li/2014/03/using-dependency-injection-to-optimise-express-middlewares/">Express 框架 middleware 的依赖问题与解决方案</a> [Chinese]</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (c) 2014 Zihua Li</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+<p><a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/luin/express-di/trend.png" alt="Bitdeli Badge"></a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/luin">luin</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
