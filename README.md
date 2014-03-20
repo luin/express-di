@@ -120,6 +120,7 @@ Test
 
 Articles and Recipes
 -----
+* [Node Roundup: cipherhub, slate, express-di](http://dailyjs.com/2014/03/19/node-roundup/)
 * [Express 框架 middleware 的依赖问题与解决方案](http://zihua.li/2014/03/using-dependency-injection-to-optimise-express-middlewares/) [Chinese]
 
 License
