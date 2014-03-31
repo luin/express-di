@@ -109,28 +109,28 @@ Sub App
 -----
 Express-DI supports sub apps out of the box. Parent app cannot access the dependencies defined in the children apps, while children apps inherits the dependencies defined in the parent app:
 
-  var express = require('express');
-  require('express-di');
-  var mainApp = express();
-  var subApp = express();
-  mainApp.use(subApp);
+    var express = require('express');
+    require('express-di');
+    var mainApp = express();
+    var subApp = express();
+    mainApp.use(subApp);
 
-  mainApp.factory('parents', function(req, res, next) {
-    next(null, 'parents');
-  });
+    mainApp.factory('parents', function(req, res, next) {
+      next(null, 'parents');
+    });
 
-  subApp.factory('children', function(req, res, next) {
-    next(null, 'children');
-  });
+    subApp.factory('children', function(req, res, next) {
+      next(null, 'children');
+    });
 
-  mainApp.get('/parents', function(children, res) {
-    // throws error
-    res.json(children);
-  });
+    mainApp.get('/parents', function(children, res) {
+      // throws error
+      res.json(children);
+    });
 
-  subApp.get('/children', function(parents, res) {
-    res.json(parents);
-  });
+    subApp.get('/children', function(parents, res) {
+      res.json(parents);
+    });
 
 Performance
 -----
