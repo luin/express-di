@@ -110,8 +110,9 @@ Performance
 -----
 The process of DI will only be executed once at startup, so you don't need to worry about the performance.
 
-
 You can test the performance using `make bench`.
+
+Benchmark requires [`wrk`](https://github.com/wg/wrk) to be installed first. You can run `brew install wrk` for Mac OS, or [build it](https://github.com/wg/wrk/issues/39) from sources for Ubuntu.
 
 Test
 -----
