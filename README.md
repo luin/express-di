@@ -9,7 +9,7 @@ Installation
 
 Usage
 -----
-To get started simply `require('express-di')` before `var app = express()`, and this module will monkey-patch Express, allowing you to define "denpendencies" by providing the `app.factory()` method, after which you can use the "denpendencies" in you routes following the [Dependency Injection pattern(DI)](http://docs.angularjs.org/guide/di).
+To get started simply `require('express-di')` before `var app = express()`, and this module will monkey-patch Express, allowing you to define "dependencies" by providing the `app.factory()` method, after which you can use the "dependencies" in your routes following the [Dependency Injection pattern(DI)](http://docs.angularjs.org/guide/di).
 
 Example
 -----
