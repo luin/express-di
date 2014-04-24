@@ -1,6 +1,6 @@
 {
   "name": "express-di",
-  "version": "0.1.3",
+  "version": "4.0.0",
   "description": "Bring the dependency injection pattern to the Express",
   "main": "index.js",
   "scripts": {
@@ -9,10 +9,11 @@
   "author": "Zihua Li <i@zihua.li>",
   "license": "MIT",
   "dependencies": {
-    "async": "~0.2.10"
+    "async": "~0.2.10",
+    "methods": "^0.1.0"
   },
   "devDependencies": {
-    "express": "~3.4.8",
+    "express": "~4.0.0",
     "mocha": "~1.17.1",
     "should": "~3.1.2",
     "supertest": "~0.9.0"

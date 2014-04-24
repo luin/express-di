@@ -32,12 +32,12 @@ describe('express.Router.prototype.route', function() {
     var func4 = function(err, req, res, next) {};
     var func5 = function(error, req, res, next) {};
     app.get('/test1', func1, func2, func3, func4, func5);
-    var cbs = helpers.getCallbacks(app.routes, 'get', '/test1');
-    cbs[0].should.equal(func1);
-    cbs[1].should.equal(func2);
-    cbs[2].should.equal(func3);
-    cbs[3].should.equal(func4);
-    cbs[4].should.equal(func5);
+    var cbs = app._router.stack[2].route.stack;
+    cbs[0].handle.should.equal(func1);
+    cbs[1].handle.should.equal(func2);
+    cbs[2].handle.should.equal(func3);
+    cbs[3].handle.should.equal(func4);
+    cbs[4].handle.should.equal(func5);
   });
 
   it('should wrapper the others middlewares', function(done) {
