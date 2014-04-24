@@ -5,7 +5,12 @@ express-di
 
 Installation
 -----
-    npm install --save express-di
+    npm install express-di
+
+Compatibility
+-----
+    Express 3.x use express-di 3.x
+    Express 4.x use express-di 4.x
 
 Usage
 -----
