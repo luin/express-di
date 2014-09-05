@@ -1,6 +1,6 @@
 {
   "name": "express-di",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Bring the dependency injection pattern to the Express",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "routes"
   ],
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "repository": "git://github.com/luin/express-di"
 }
