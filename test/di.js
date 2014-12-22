@@ -182,7 +182,7 @@ describe('express.Router.prototype.route', function() {
     appNew.get('/test10', func);
     var request = supertest(appNew);
     request.get('/test10').expect(500, function(err, res) {
-      res.text.should.match(/Unrecognized dependency: test10\n/);
+      res.text.should.match(/Unrecognized dependency: test10/);
       done();
     });
   });
@@ -200,8 +200,26 @@ describe('express.Router.prototype.route', function() {
     };
     app.get('/test11', func);
     request.get('/test11').expect(500, function(err, res) {
-      res.text.should.match(/Unrecognized dependency: test11\n/);
+      res.text.should.match(/Unrecognized dependency: test11/);
       done();
     });
   });
+
+  it('should get the dependency on param method', function(done) {
+    var appNew = express();
+    app.factory('test12', function(req, res, next) {
+      next(null, 'test12');
+    });
+    var func = function(test12, next) {
+      test12.should.eql('test12');
+      next();
+    };
+    app.use(appNew);
+    appNew.param('key', func);
+    appNew.get('/test12/:key', function(res){
+      res.send(200);
+    });
+    request.get('/test12/1234567').expect(200, done);
+  });
+
 });
