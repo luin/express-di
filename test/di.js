@@ -204,4 +204,27 @@ describe('express.Router.prototype.route', function() {
       done();
     });
   });
+
+  it('should get the dependency on param method', function(done) {
+    var appNew = express();
+
+    appNew.factory('test12', function(req, res, next) {
+      next(null, 'test12');
+    });
+
+    var func = function(test12, id, key, v, next) {
+      test12.should.eql('test12');
+      id.should.eql('1234567');
+      key.should.eql('key');
+      (typeof v).should.eql('undefined');
+      next();
+    };
+    app.use(appNew);
+    appNew.param('key', func);
+    appNew.get('/test12/:key', function(res){
+      res.send(200);
+    });
+    request.get('/test12/1234567').expect(200, done); 
+  });
+
 });
