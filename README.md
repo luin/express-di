@@ -10,7 +10,7 @@ Installation
 Compatibility
 -----
     Express 3.x use express-di 3.x
-    Express 4.x use express-di 4.x
+    Express 4.x use express-di 5.x or 4.x
 
 Usage
 -----
@@ -177,5 +177,3 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/luin/express-di/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
